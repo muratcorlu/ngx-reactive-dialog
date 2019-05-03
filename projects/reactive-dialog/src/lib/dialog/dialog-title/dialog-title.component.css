@@ -1,0 +1,8 @@
+im-dialog-title {
+  display: block;
+  color: var(--dialog-title-color, #333);
+  font-size: 1.125em;
+  font-weight: bold;
+  line-height: 1.625rem;
+  padding: 24px 24px 12px 24px;
+}

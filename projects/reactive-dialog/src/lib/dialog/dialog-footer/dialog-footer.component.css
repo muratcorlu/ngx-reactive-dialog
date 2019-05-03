@@ -1,0 +1,9 @@
+im-dialog-footer {
+  display: block;
+  text-align: right;
+  padding: 12px;
+}
+
+im-dialog-footer button + button {
+  margin-left: 8px;
+}

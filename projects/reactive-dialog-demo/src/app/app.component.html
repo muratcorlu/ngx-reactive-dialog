@@ -1,0 +1,147 @@
+<article>
+  <h2>Dialogs</h2>
+
+  <h3>Basic Dialogs</h3>
+
+  <p>You can show a simple dialog with this code in your template:</p>
+
+  <pre><code>
+&lt;im-dialog-container *ngIf="showDialog"&gt;
+  &lt;im-dialog-title&gt;Dialog Title&lt;/im-dialog-title&gt;
+  &lt;im-dialog-content&gt;Dialog content.&lt;/im-dialog-content&gt;
+  &lt;im-dialog-footer&gt;
+    &lt;im-button (click)="showDialog=false"&gt;Close&lt;/im-button&gt;
+  &lt;/im-dialog-footer&gt;
+&lt;/im-dialog-container&gt;
+&lt;im-button (click)="showDialog=true"&gt;Show Dialog&lt;/im-button&gt;
+  </code></pre>
+
+  <im-dialog-container *ngIf="showDialog">
+    <im-dialog-title>Dialog Title</im-dialog-title>
+    <im-dialog-content>Dialog content.</im-dialog-content>
+    <im-dialog-footer>
+      <im-button (click)="showDialog=false">Close</im-button>
+    </im-dialog-footer>
+  </im-dialog-container>
+  <im-button (click)="showDialog=true">Show Dialog</im-button>
+
+  <h3>Dialogs with States</h3>
+
+  <p>We have a special `DialogState` object to manage openning/closing dialogs
+    from templates or controllers. In your TypeScript controller, you can define
+    a state property and link it to your dialog component in your template via
+    `imDialogState` directive. Here is the controller:</p>
+
+  <pre><code>
+import {{ '{' }} DialogState {{ '}' }} from 'reactive-dialog';
+
+@Component({{ '{' }}
+...
+{{ '}' }})
+export class TestComponent {{ '{' }}
+  public dialogState = new DialogState();
+{{ '}' }}
+  </code></pre>
+
+  <p>And this is your template:</p>
+
+  <pre><code>
+&lt;im-dialog *imDialogState="dialogState"&gt;
+  &lt;im-dialog-title&gt;Title&lt;/im-dialog-title&gt;
+  &lt;im-dialog-content&gt;Content&lt;/im-dialog-content&gt;
+  &lt;im-dialog-footer&gt;
+    &lt;im-button (click)="dialogState.cancel()"&gt;Cancel&lt;/im-button&gt;
+    &lt;im-button (click)="dialogState.resolve('some data')"&gt;OK&lt;/im-button&gt;
+  &lt;/im-dialog-footer&gt;
+&lt;/im-dialog&gt;
+  </code></pre>
+
+  <p>If you call <strong>open()</strong> method of this dialog state from template or controller,
+    it will open the dialog and will return an Observable to track the result of dialog. With
+    <strong>cancel</strong> method, you can dismiss dialog(and reject observable) and with <strong>resolve</strong>
+    method you can resolve the dialog and this observable with an optional value.
+  </p>
+
+  <p>DialogState can accept a resolve data type and a context data type:</p>
+
+  <pre><code>
+public dialogState = new DialogState&gt;User, User&gt;();
+
+public updateUser(user: User) {{ '{' }}
+  this.dialogState.open(user).subscribe((updatedUser: User) => {{ '{' }}
+    this.userService.updateUser(updatedUser);
+  {{ '}' }})
+{{ '}' }}
+  </code></pre>
+
+  <p>In the example above, the dialog is expecting an object with <strong>User</strong> type and also it
+    will resolve a User object. You can use context data in your template as <strong>data</strong> property
+    of DialogState object.</p>
+
+  <pre><code>
+&lt;im-dialog *imDialogState="dialogState"&gt;
+  &lt;im-dialog-title&gt;Update username&lt;/im-dialog-title&gt;
+  &lt;im-dialog-content&gt;
+    &lt;input [(ngModel)]="dialogState.data.username"&gt;
+  &lt;/im-dialog-content&gt;
+  &lt;im-dialog-footer&gt;
+    &lt;im-button (click)="dialogState.cancel()"&gt;Cancel&lt;/im-button&gt;
+    &lt;im-button (click)="dialogState.resolve(dialogState.data)"&gt;Save&lt;/im-button&gt;
+  &lt;/im-dialog-footer&gt;
+&lt;/im-dialog&gt;
+  </code></pre>
+
+  <h3>Confirmation Dialogs</h3>
+
+  <p>If you want to add a confirmation in front of an action in template, you can just
+    use <strong>(iaConfirm)</strong> directive instead of <strong>(click)</strong>.
+    If user approve dialog, callback code will be called by confirmation directive
+    (<strong>test</strong> method in this example).</p>
+  <pre><code>
+&lt;im-button (iaConfirm)="test()"
+            confirmDenyText="Cancel"
+            confirmApproveText="Yes Delete"
+            confirmTitle="Confirm Deletion"
+            confirmQuestion="Are you sure you want to delete this project?"&gt;Delete Project&lt;/im-button&gt;
+&lt;span&gt;{{ '{\{' }} confirmationDialogResult {{ '}\}' }}&lt;/span&gt;
+  </code></pre>
+
+  <im-button (iaConfirm)="deleteProject()"
+    confirmDenyText="Cancel"
+    confirmApproveText="Yes Delete"
+    confirmTitle="Confirm Deletion"
+    confirmQuestion="Are you sure you want to delete this project?">Delete Project</im-button>
+  <span>{{ confirmationDialogResult }}</span>
+
+  <p>You can also trigger confirmation dialogs inside TypeScript controllers via <strong>ConfirmDialogState</strong>
+    service.</p>
+
+  <pre><code>
+import {{ '{' }} ConfirmDialogState {{ '}' }} from 'reactive-dialog';
+
+@Component({{ '{' }}
+...
+{{ '}' }})
+export class TestComponent {{ '{' }}
+  public confirmDialogState = new ConfirmDialogState();
+
+  public deleteUser(user: User) {{ '{' }}
+    this.confirmDialogState.confirm({{ '{' }}
+      'Delete User',
+      'Are you sure you want to remove ' + user.name + '?',
+      'Delete',
+      'Cancel'
+    {{ '}' }}).subscribe(() => {{ '{' }}
+      // delete approved
+    {{ '}' }}, () => {{ '{' }}
+      // delete cancelled
+    {{ '}' }});
+  {{ '}' }}
+{{ '}' }}
+  </code></pre>
+  <p>Please not that you need to add an empty <strong>im-confirm-dialog</strong> to you document. It can be good to do it in your <strong>app.component.html</strong> file.</p>
+
+  <pre><code>
+    &lt;im-confirm-dialog&gt;&lt;/im-confirm-dialog&gt;
+  </code></pre>
+<article>

@@ -1,0 +1,11 @@
+im-dialog-content {
+  color: var(--dialog-text-color, black);
+  margin: 12px 0;
+  padding: 0 24px;
+  display: block;
+  overflow: auto;
+  font-size: 1em;
+  line-height: 1.5em;
+  font-weight: 300;
+  max-height: calc(100vh - 400px);
+}

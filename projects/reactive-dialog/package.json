@@ -1,20 +1,8 @@
 {
-  "name": "ngx-reactive-dialog",
+  "name": "reactive-dialog",
   "version": "0.0.1",
-  "description": "Reactive and declarative dialogs for Angular",
-  "homepage": "https://github.com/muratcorlu/ngx-reactive-dialog#readme",
-  "keywords": [
-    "angular",
-    "dialog",
-    "rxjs"
-  ],
-  "author": "Murat Çorlu - Irakli Pkhakadze",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/muratcorlu/ngx-reactive-dialog/issues"
-  },
   "peerDependencies": {
-    "@angular/common": "^7.1.0",
-    "@angular/core": "^7.1.0"
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
   }
 }

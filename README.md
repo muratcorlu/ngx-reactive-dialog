@@ -14,9 +14,9 @@ Import `ReactiveDialogModule` in your module file(`app.module.ts`):
 import { ReactiveDialogModule } from 'ngx-reactive-dialog';
 
 @NgModule({
-    imports: [
-        ReactiveDialogModule
-    ]
+  imports: [
+    ReactiveDialogModule
+  ]
 })
 ```
 

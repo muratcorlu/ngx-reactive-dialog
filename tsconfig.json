@@ -20,10 +20,10 @@
     ],
     "paths": {
       "reactive-dialog": [
-        "dist/reactive-dialog"
+        "projects/reactive-dialog/src/public_api",
       ],
       "reactive-dialog/*": [
-        "dist/reactive-dialog/*"
+        "projects/reactive-dialog/src/lib/*"
       ]
     }
   }

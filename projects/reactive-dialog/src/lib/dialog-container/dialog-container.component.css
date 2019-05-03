@@ -1,0 +1,25 @@
+im-dialog-container .backdrop {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--dialog-zIndex, 100);
+  position: fixed;
+  background-color: rgba(0, 0, 0, .6);
+}
+
+im-dialog-container .dialog {
+  top: 50%;
+  left: 50%;
+  z-index: var(--dialog-zIndex, 100);
+  position: fixed;
+  overflow: hidden;
+  min-width: 450px;
+  max-width: 75vw;
+  transform: translateX(-50%) translateY(-50%);
+  min-height: 100px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: var(--dialog-bg-color, white);
+}
